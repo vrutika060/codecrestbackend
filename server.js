@@ -52,6 +52,9 @@ const reviewRoutes = require("./routes/reviewRoutes");
 
 const app = express();
 
+app.set("trust proxy", 1); // Trust the first proxy
+
+
 // Middleware
 app.use(express.json());
 
