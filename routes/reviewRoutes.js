@@ -6,7 +6,8 @@ const Review = require("../models/Review");
 
 router.get("/", async (req, res) => {
     try {
-      const reviews = await Review.find().sort({ _id: -1 }); // Fetch all reviews (latest first)
+     // const reviews = await Review.find().sort({ _id: -1 }); // Fetch all reviews (latest first)
+     const reviews = await Review.find().sort({ createdAt: -1 }); // Most recent first
       res.json(reviews);
     } catch (error) {
       res.status(500).json({ error: "Server error" });
@@ -24,7 +25,9 @@ router.post("/", async (req, res) => {
       return res.status(400).json({ message: "All fields are required" });
     }
 
-    const newReview = new Review({ name, review, rating, date: new Date().toLocaleString() });
+    //const newReview = new Review({ name, review, rating, date: new Date().toLocaleString() });
+    const newReview = new Review({ name, review, rating });
+
     await newReview.save();
 
     res.status(201).json({ message: "Review saved successfully", data: newReview });
